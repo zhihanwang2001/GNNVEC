@@ -1,0 +1,67 @@
+# 优化的GNN-PPO (GAT版本) 配置
+# 基于性能问题分析的改进配置
+
+# 训练参数 - 优化学习率和批次大小
+training:
+  episodes: 500
+  learning_rate: 3e-4     # 降低学习率，提高稳定性
+  gamma: 0.95             # 提高折扣因子，重视长期奖励
+  batch_size: 128         # 减少批次大小，提高更新频率
+  update_iteration: 10    # 减少更新迭代，避免过拟合
+  capacity: 4000          # 增加经验池容量
+  clip_param: 0.2
+  max_grad_norm: 0.5
+  save_interval: 20
+
+# GNN参数 - 优化架构
+gnn:
+  enabled: true
+  type: 'GAT'
+  hidden_dim: 128         # 增加隐藏层维度
+  output_dim: 256         # 增加输出维度
+  layers: 3               # 增加层数，提升表达能力
+  heads: 8                # 增加注意力头数
+  dropout: 0.1
+
+# 环境参数（保持不变）
+environment:
+  num_car: 20
+  num_tcar: 15
+  num_scar: 5
+  num_task: 15
+  num_uav: 1
+  num_rsu: 1
+  time_slots: 20
+  area_width: 400
+  area_height: 400
+  v2v_range: 300
+  v2i_range: 400
+
+# 网络架构参数 - 增加网络容量
+network:
+  layer1: 512
+  layer2: 256
+  min_std: 1e-4
+  max_std: 10
+
+# 实验参数
+experiment:
+  seed: true
+  random_seed: 9527
+  log_interval: 1
+  eval_interval: 50
+  device: 'auto'
+
+# 输出参数
+output:
+  model_dir: 'saved_models/'
+  log_dir: 'logs/'
+  result_dir: 'results/'
+  plot_dir: 'plots/'
+
+# 奖励工程 - 新增奖励调整参数
+reward_engineering:
+  success_bonus: 10.0     # 成功任务完成的额外奖励
+  delay_penalty_scale: 0.1 # 延迟惩罚缩放因子
+  energy_penalty_scale: 0.05 # 能耗惩罚缩放因子
+  load_balance_bonus: 5.0  # 负载均衡奖励

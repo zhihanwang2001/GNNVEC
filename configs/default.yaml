@@ -1,0 +1,66 @@
+# GNN_PPO_VEC 默认配置文件
+# 图神经网络增强VEC任务调度系统配置
+
+# 训练参数
+training:
+  episodes: 500           # 训练回合数
+  learning_rate: 8e-4     # 学习率
+  gamma: 0.9              # 折扣因子
+  batch_size: 256         # 批处理大小
+  update_iteration: 20    # 更新迭代次数
+  capacity: 2000          # 经验池容量
+  clip_param: 0.2         # PPO剪切参数
+  max_grad_norm: 0.5      # 梯度剪切范数
+  save_interval: 10       # 模型保存间隔
+
+# 图神经网络参数
+gnn:
+  type: 'GAT'             # GNN类型 (GAT/GCN/GraphSAGE)
+  hidden_dim: 64          # 隐藏层维度
+  output_dim: 128         # 输出维度
+  layers: 2               # GNN层数
+  heads: 4                # 注意力头数（GAT专用）
+  dropout: 0.1            # Dropout率
+
+# 环境参数
+environment:
+  num_car: 20             # 总车辆数
+  num_tcar: 15            # 任务车辆数
+  num_scar: 5             # 服务车辆数
+  num_task: 15            # 任务数量
+  num_uav: 1              # UAV数量
+  num_rsu: 1              # RSU数量
+  time_slots: 20          # 每回合时隙数
+  area_width: 400         # 区域宽度（米）
+  area_height: 400        # 区域高度（米）
+  v2v_range: 300          # V2V通信范围（米）
+  v2i_range: 400          # V2I通信范围（米）
+
+# 网络架构参数
+network:
+  layer1: 512             # Actor/Critic第一层
+  layer2: 256             # Actor/Critic第二层
+  min_std: 1e-4           # 最小标准差
+  max_std: 10             # 最大标准差
+
+# 实验参数
+experiment:
+  seed: true              # 是否设置随机种子
+  random_seed: 9527       # 随机种子值
+  log_interval: 1         # 日志输出间隔
+  eval_interval: 50       # 评估间隔
+  device: 'auto'          # 设备选择 (auto/cpu/cuda)
+
+# 数据参数
+data:
+  ngsim_path: 'data/ngsim/' # NGSIM数据路径
+  sequence_length: 20     # 序列长度
+  time_step: 1.0          # 时间步长（秒）
+  synthetic_vehicles: 50  # 合成数据车辆数
+
+# 输出参数
+output:
+  model_dir: 'saved_models/'     # 模型保存目录
+  log_dir: 'logs/'               # 日志保存目录
+  result_dir: 'results/'         # 结果保存目录
+  plot_dir: 'plots/'             # 图表保存目录

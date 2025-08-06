@@ -1,0 +1,60 @@
+# PPO基线对比配置
+# 传统PPO算法配置，用于与GNN-PPO对比
+
+# 训练参数
+training:
+  episodes: 500
+  learning_rate: 8e-4
+  gamma: 0.9
+  batch_size: 256
+  update_iteration: 20
+  capacity: 2000
+  clip_param: 0.2
+  max_grad_norm: 0.5
+  save_interval: 10
+
+# 禁用GNN特征
+gnn:
+  enabled: false  # 关键：禁用GNN功能
+  type: 'none'
+  hidden_dim: 64
+  output_dim: 128
+  layers: 2
+  heads: 4
+  dropout: 0.1
+
+# 环境参数（与GNN-PPO相同）
+environment:
+  num_car: 20
+  num_tcar: 15
+  num_scar: 5
+  num_task: 15
+  num_uav: 1
+  num_rsu: 1
+  time_slots: 20
+  area_width: 400
+  area_height: 400
+  v2v_range: 300
+  v2i_range: 400
+
+# 网络架构参数
+network:
+  layer1: 512
+  layer2: 256
+  min_std: 1e-4
+  max_std: 10
+
+# 实验参数
+experiment:
+  seed: true
+  random_seed: 9527  # 相同随机种子保证公平对比
+  log_interval: 1
+  eval_interval: 50
+  device: 'auto'
+
+# 输出参数
+output:
+  model_dir: 'saved_models/'
+  log_dir: 'logs/'
+  result_dir: 'results/'
+  plot_dir: 'plots/'
